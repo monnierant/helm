@@ -18,7 +18,7 @@ api:
   replicaCount: 2
 
 web:
-  image: monnierant/isokono-web-frontend
+  image: monnierant/isokono-website-frontend
   tag: latest
   replicaCount: 2
 
