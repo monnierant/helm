@@ -22,7 +22,7 @@ spec:
           - name: BOT_TOKEN
             valueFrom:
               secretKeyRef:
-                name: discord-secret
+                name: {{ .Release.Name }}-discord-secret
                 key: bot-token
           - name: API_URL
             value: "http://{{ .Release.Name }}-api-svc:8000/api/"
