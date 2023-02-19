@@ -31,7 +31,7 @@ spec:
               key: password
         - name: MYSQL_DATABASE
           value: laravel
-  volumeClaimTemplates:
+volumeClaimTemplates:
   - metadata:
       name: {{ .Release.Name }}-bdd-volume
     spec:
