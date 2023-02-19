@@ -1,0 +1,53 @@
+
+#==============================================================================
+# Pods
+#==============================================================================
+mysql:
+  image: mysql:5.6
+  replicaCount: 1
+
+bot: 
+  image: monnierant/isokono-discord-bot
+  tag: latest
+  replicaCount: 1
+
+api:
+  image: monnierant/isokono-api-backend
+  tag: latest
+  replicaCount: 2
+
+web:
+  image: monnierant/isokono-web-frontend
+  tag: latest
+  replicaCount: 2
+
+
+replicas:
+  mysql: 1
+  api: 2
+  web: 2
+  bot: 1
+
+#==============================================================================
+# Ingress
+#==============================================================================
+ingress:
+  host: isokono.promonni.com
+  issuer: letsencrypt-staging
+
+#==============================================================================
+# Métier
+#==============================================================================
+discord:
+  bot:
+    id: ""
+    key: ""
+    token: ""
+  roleAdmin: 'Le sablier'
+
+#==============================================================================
+# Secrets
+#==============================================================================
+secrets:
+  mysql: ""
+  jwt: ""

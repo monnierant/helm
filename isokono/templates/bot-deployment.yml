@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-bot
+  namespace: {{ .Release.Name }}-main
+  labels:
+    app: {{ .Release.Name }}-bot   
+spec:
+  replicas: {{ .Values.bot.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-bot
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-bot
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-bot
+        image: {{ .Values.bot.image }}:{{ .Values.bot.tag }}
+        imagePullPolicy: "Always"
+        env:
+          - name: BOT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: discord-secret
+                key: bot-token
+          - name: API_URL
+            value: "http://{{ .Release.Name }}-api-svc:8000/api/"

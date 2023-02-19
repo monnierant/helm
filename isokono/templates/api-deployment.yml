@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api
+  labels:
+    app: {{ .Release.Name }}-api   
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-api
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-api
+        image: {{ .Values.api.image }}:{{ .Values.api.tag }}
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: {{ .Release.Name }}-mysql-svc
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_DATABASE
+          value: laravel
+        - name: DB_USERNAME
+          value: root
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-mysql-secret
+              key: password
+        - name: DISCORD_SERVER_NAME
+          value: 'isokono'
+        - name: DISCORD_ADMIN_ROLE
+          value: 'Le sablier'
+        - name: DISCORD_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-discord-secret
+              key: bot-token
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-jwt-secret
+              key: secret
+        

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web
+  namespace: {{ .Release.Name }}-main
+  labels:
+    app: {{ .Release.Name }}-web   
+spec:
+  replicas: {{ .Values.web.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-web
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-web
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-web
+        image: {{ .Values.web.image }}:{{ .Values.web.tag }}
+        ports:
+        - containerPort: 4200
+        env:
+        - name: PRODUCTION
+          value: 'false'
+        - name: API_URL
+          value: 'https://{{ .Values.ingress.host }}/api/'
+        - name: API_DOMAIN
+          value: '{{ .Values.ingress.host }}'
+        - name: DISCORD_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: discord-secret
+              key: id
+        - name: DISCORD_KEY
+          valueFrom:
+            secretKeyRef:
+              name: discord-secret
+              key: key
+        - name: DISCORD_ROLE_ADMIN
+          value: {{ .Values.discord.roleAdmin }}
+        
