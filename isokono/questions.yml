@@ -21,6 +21,12 @@ questions:
   type: integer
   label: Replicas Web
   group: "Replicas"
+- variable: replicas.bot
+  default: 1
+  description: Replicas
+  type: integer
+  label: Replicas Bot
+  group: "Replicas"
 
 #==============================================================================
 # Ingress
