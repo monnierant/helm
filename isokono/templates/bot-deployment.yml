@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-bot
-  namespace: {{ .Release.Name }}-main
   labels:
     app: {{ .Release.Name }}-bot   
 spec:
