@@ -50,6 +50,16 @@ questions:
 #==============================================================================
 # Métier
 #==============================================================================
+- variable: discord.serverName
+  type: string
+  label: Server Discord Name
+  group: "Métier"
+  required: true
+- variable: discord.roleAdmin
+  type: string
+  label: Role Admin
+  group: "Métier"
+  required: true
 - variable: discord.bot.id
   type: string
   label: Bot ID
@@ -65,11 +75,7 @@ questions:
   label: Bot Token
   group: "Métier"
   required: true
-- variable: discord.roleAdmin
-  type: string
-  label: Role Admin
-  group: "Métier"
-  required: true
+
 
 #==============================================================================
 # Secrets

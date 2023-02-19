@@ -34,9 +34,9 @@ spec:
               name: {{ .Release.Name }}-mysql-secret
               key: password
         - name: DISCORD_SERVER_NAME
-          value: 'isokono'
+          value: {{ .Values.discord.serverName }}
         - name: DISCORD_ADMIN_ROLE
-          value: 'Le sablier'
+          value: {{ .Values.discord.roleAdmin }}
         - name: DISCORD_BOT_TOKEN
           valueFrom:
             secretKeyRef:

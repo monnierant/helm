@@ -38,6 +38,7 @@ discord:
     key: ""
     token: ""
   roleAdmin: 'Le sablier'
+  serverName: 'Isokono'
 
 #==============================================================================
 # Secrets
