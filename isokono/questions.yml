@@ -3,25 +3,25 @@ questions:
 #==============================================================================
 # Replicas
 #==============================================================================
-- variable: replicas.mysql
+- variable: mysql.replicaCount
   default: 1
   description: Replicas
   type: integer
   label: Replicas MySQL
   group: "Replicas"
-- variable: replicas.api
+- variable: api.replicaCount
   default: 2
   description: Replicas
   type: integer
   label: Replicas API
   group: "Replicas"
-- variable: replicas.web
+- variable: web.replicaCount
   default: 2
   description: Replicas
   type: integer
   label: Replicas Web
   group: "Replicas"
-- variable: replicas.bot
+- variable: bot.replicaCount
   default: 1
   description: Replicas
   type: integer
