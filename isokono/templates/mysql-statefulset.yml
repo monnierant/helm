@@ -6,7 +6,7 @@ metadata:
     app: {{ .Release.Name }}-mysql
 spec:
 serviceName: {{ .Release.Name }}-mysql
-  replicas: {{ .Values.replicas.mysql }}
+  replicas: {{ .Values.mysql.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-mysql
