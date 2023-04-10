@@ -4,96 +4,96 @@ metadata:
   name: {{ .Release.Name }}-gitlab
   labels:
     app: {{ .Release.Name }}-gitlab
-  spec:
-    serviceName: {{ .Release.Name }}-gitlab
-    replicas: 1
-    selector:
-      matchLabels:
+spec:
+  serviceName: {{ .Release.Name }}-gitlab
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-gitlab
+  template:
+    metadata:
+      labels:
         app: {{ .Release.Name }}-gitlab
-    template:
-      metadata:
-        labels:
-          app: {{ .Release.Name }}-gitlab
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: {{ .Release.Name }}-gitlab-data-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-gitlab-data-pvc
+        - name: {{ .Release.Name }}-gitlab-etc-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-gitlab-etc-pvc
+        - name: {{ .Release.Name }}-gitlab-log-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-gitlab-log-pvc
+        - name: {{ .Release.Name }}-registry-cert
+          secret:
+            secretName: {{ .Release.Name }}-registry-tls
+      containers:
+        - name: {{ .Release.Name }}-gitlab
+          image: gitlab/gitlab-ce:latest
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+            - name: registry
+              containerPort: 5678
+          volumeMounts:
+            - name: {{ .Release.Name }}-gitlab-data-volume
+              mountPath: /var/opt/gitlab
+            - name: {{ .Release.Name }}-gitlab-etc-volume
+              mountPath: /etc/gitlab
+            - name: {{ .Release.Name }}-gitlab-log-volume
+              mountPath: /var/log/gitlab
+            - name: {{ .Release.Name }}-registry-cert
+              mountPath: /etc/gitlab/ssl
+          env:
+            - name: GITLAB_OMNIBUS_CONFIG
+              value: |
+                external_url 'https://{{ .Values.ingress.gitlab.host }}'
+                registry_external_url 'https://{{ .Values.ingress.registry.host }}'
+                registry_nginx['redirect_http_to_https'] = true
+                registry_nginx['listen_port'] = 5678
+                registry_nginx['listen_https'] = false
+                registry_nginx['client_max_body_size'] = '0'
+                gitlab_kas['enable'] = true
+                letsencrypt['enable'] = false
+                gitlab_rails['lfs_enabled'] = true
+                nginx['listen_port'] = 80
+                nginx['listen_https'] = false
+                nginx['proxy_set_headers'] = {
+                "X-Forwarded-Proto" => "https",
+                "X-Forwarded-Ssl" => "on"
+                }
+      terminationGracePeriodSeconds: 300
+  volumeClaimTemplates:
+    - metadata:
+      name: {{ .Release.Name }}-gitlab-data-pvc
       spec:
-        serviceAccountName: default
-        securityContext:
-          fsGroup: 1000
-        volumes:
-          - name: {{ .Release.Name }}-gitlab-data-volume
-            persistentVolumeClaim:
-              claimName: {{ .Release.Name }}-gitlab-data-pvc
-          - name: {{ .Release.Name }}-gitlab-etc-volume
-            persistentVolumeClaim:
-              claimName: {{ .Release.Name }}-gitlab-etc-pvc
-          - name: {{ .Release.Name }}-gitlab-log-volume
-            persistentVolumeClaim:
-              claimName: {{ .Release.Name }}-gitlab-log-pvc
-          - name: {{ .Release.Name }}-registry-cert
-            secret:
-              secretName: {{ .Release.Name }}-registry-tls
-        containers:
-          - name: {{ .Release.Name }}-gitlab
-            image: gitlab/gitlab-ce:latest
-            ports:
-              - name: http
-                containerPort: 80
-              - name: https
-                containerPort: 443
-              - name: registry
-                containerPort: 5678
-            volumeMounts:
-              - name: {{ .Release.Name }}-gitlab-data-volume
-                mountPath: /var/opt/gitlab
-              - name: {{ .Release.Name }}-gitlab-etc-volume
-                mountPath: /etc/gitlab
-              - name: {{ .Release.Name }}-gitlab-log-volume
-                mountPath: /var/log/gitlab
-              - name: {{ .Release.Name }}-registry-cert
-                mountPath: /etc/gitlab/ssl
-            env:
-              - name: GITLAB_OMNIBUS_CONFIG
-                value: |
-                  external_url 'https://{{ .Values.ingress.gitlab.host }}'
-                  registry_external_url 'https://{{ .Values.ingress.registry.host }}'
-                  registry_nginx['redirect_http_to_https'] = true
-                  registry_nginx['listen_port'] = 5678
-                  registry_nginx['listen_https'] = false
-                  registry_nginx['client_max_body_size'] = '0'
-                  gitlab_kas['enable'] = true
-                  letsencrypt['enable'] = false
-                  gitlab_rails['lfs_enabled'] = true
-                  nginx['listen_port'] = 80
-                  nginx['listen_https'] = false
-                  nginx['proxy_set_headers'] = {
-                  "X-Forwarded-Proto" => "https",
-                  "X-Forwarded-Ssl" => "on"
-                  }
-        terminationGracePeriodSeconds: 300
-volumeClaimTemplates:
-  - metadata:
-    name: {{ .Release.Name }}-gitlab-data-pvc
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      storageClassName: longhorn
-      resources:
-        requests:
-          storage: 200Gi
-  - metadata:
-    name: {{ .Release.Name }}-gitlab-etc-pvc
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      storageClassName: longhorn
-      resources:
-        requests:
-          storage: 1Gi
-  - metadata:
-    name: {{ .Release.Name }}-gitlab-log-pvc
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      storageClassName: longhorn
-      resources:
-        requests:
-          storage: 1Gi
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 200Gi
+    - metadata:
+      name: {{ .Release.Name }}-gitlab-etc-pvc
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+      name: {{ .Release.Name }}-gitlab-log-pvc
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi
