@@ -3,13 +3,67 @@ questions:
 #==============================================================================
 # Replicas
 #==============================================================================
-# - variable: mysql.replicaCount
-#   default: 1
-#   description: Replicas
-#   type: integer
-#   label: Replicas MySQL
-#   group: "Replicas"
+- variable: replicas.gitlab.replicas
+  default: 1
+  description: Replicas
+  type: integer
+  label: Replicas GitLab
+  group: "Replicas"
+  required: true
 
+#==============================================================================
+# Storage
+#==============================================================================
+- variable: replicas.gitlab.storageClass.data.name
+  description: Gitlab etc storage class
+  type: enum
+  label: Gitlab etc storage class
+  group: "Storage"
+  required: true
+  options:
+  - "longhorn"
+  - "longhorn-2-replicas"
+  - "longhorn-single"
+- variable: replicas.gitlab.storageClass.data.size
+  description: Replicas
+  type: string
+  label: Replicas GitLab
+  group: "Storage"
+  required: true
+  
+- variable: replicas.gitlab.storageClass.etc.name
+  description: Gitlab etc storage class
+  type: enum
+  label: Gitlab etc storage class
+  group: "Storage"
+  required: true
+  options:
+  - "longhorn"
+  - "longhorn-2-replicas"
+  - "longhorn-single"
+- variable: replicas.gitlab.storageClass.etc.size
+  description: Replicas
+  type: string
+  label: Replicas GitLab
+  group: "Storage"
+  required: true
+
+- variable: replicas.gitlab.storageClass.log.name
+  description: Gitlab etc storage class
+  type: enum
+  label: Gitlab etc storage class
+  group: "Storage"
+  required: true
+  options:
+  - "longhorn"
+  - "longhorn-2-replicas"
+  - "longhorn-single"
+- variable: replicas.gitlab.storageClass.log.size
+  description: Replicas
+  type: string
+  label: Replicas GitLab
+  group: "Storage"
+  required: true
 
 #==============================================================================
 # Ingress

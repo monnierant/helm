@@ -11,3 +11,20 @@ ingress:
   registry:
     host: registry.git.exemple.com
   issuer: letsencrypt-prod
+
+# ---------------------------------------------------------------------------- #
+#                                   Replicas                                   #
+# ---------------------------------------------------------------------------- #
+replicas:
+  gitlab:
+    replicas: 1
+    storageClass: 
+      etc: 
+        name: longhorn-2-replicas
+        size: 1Gi
+      log: 
+        name: longhorn-2-replicas
+        size: 1Gi
+      data: 
+        name: longhorn-single
+        size: 200Gi

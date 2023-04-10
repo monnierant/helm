@@ -6,7 +6,7 @@ metadata:
     app: {{ .Release.Name }}-gitlab
 spec:
   serviceName: {{ .Release.Name }}-gitlab
-  replicas: 1
+  replicas: {{ .Values.replicas.gitlab.replicas }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-gitlab
@@ -75,28 +75,25 @@ spec:
       spec:
         accessModes:
         - ReadWriteOnce
-        storageClassName: longhorn
+        storageClassName: {{ .Values.replicas.gitlab.storageClass.data.name }}
         resources:
           requests:
-            storage: 200Gi
-        numberOfReplicas: 1
+            storage: {{ .Values.replicas.gitlab.storageClass.data.size }}
     - metadata:
         name: {{ .Release.Name }}-gitlab-etc-volume
       spec:
         accessModes:
         - ReadWriteOnce
-        storageClassName: longhorn
+        storageClassName: {{ .Values.replicas.gitlab.storageClass.etc.name }}
         resources:
           requests:
-            storage: 1Gi
-        numberOfReplicas: 2
+            storage: {{ .Values.replicas.gitlab.storageClass.etc.size }}
     - metadata:
         name: {{ .Release.Name }}-gitlab-log-volume
       spec:
         accessModes:
         - ReadWriteOnce
-        storageClassName: longhorn
+        storageClassName: {{ .Values.replicas.gitlab.storageClass.log.name }}
         resources:
           requests:
-            storage: 1Gi
-        numberOfReplicas: 2
+            storage: {{ .Values.replicas.gitlab.storageClass.log.size }}
