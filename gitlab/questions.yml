@@ -1,0 +1,81 @@
+questions:
+
+#==============================================================================
+# Replicas
+#==============================================================================
+# - variable: mysql.replicaCount
+#   default: 1
+#   description: Replicas
+#   type: integer
+#   label: Replicas MySQL
+#   group: "Replicas"
+
+
+#==============================================================================
+# Ingress
+#==============================================================================
+- variable: ingress.gitlab.host
+  description: Domain for gitlab
+  type: string
+  label: Ingress Gitlab host
+  group: "Ingress"
+  required: true
+- variable: ingress.registry.host
+  description: Domain for registry
+  type: string
+  label: Ingress Registry host
+  group: "Ingress"
+  required: true
+- variable: ingress.issuer
+  description: ""
+  type: enum
+  label: Ingress issuer
+  group: "Ingress"
+  required: true
+  options:
+  - "letsencrypt-prod"
+  - "letsencrypt-staging"
+  
+#==============================================================================
+# Métier
+#==============================================================================
+# - variable: discord.serverName
+#   type: string
+#   label: Server Discord Name
+#   group: "Métier"
+#   required: true
+# - variable: discord.roleAdmin
+#   type: string
+#   label: Role Admin
+#   group: "Métier"
+#   required: true
+# - variable: discord.bot.id
+#   type: string
+#   label: Bot ID
+#   group: "Métier"
+#   required: true
+# - variable: discord.bot.key
+#   type: string
+#   label: Bot Key
+#   group: "Métier"
+#   required: true
+# - variable: discord.bot.token
+#   type: string
+#   label: Bot Token
+#   group: "Métier"
+#   required: true
+
+
+#==============================================================================
+# Secrets
+#==============================================================================
+# - variable: secrets.mysql
+#   type: string
+#   label: MYSQL Password
+#   group: "Secrets"
+#   required: true
+# - variable: secrets.jwt
+#   type: string
+#   label: JWT Token
+#   group: "Secrets"
+#   required: true
