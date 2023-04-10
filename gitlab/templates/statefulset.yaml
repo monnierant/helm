@@ -71,7 +71,7 @@ spec:
       terminationGracePeriodSeconds: 300
   volumeClaimTemplates:
     - metadata:
-        name: {{ .Release.Name }}-gitlab-data-pvc
+        name: {{ .Release.Name }}-gitlab-data-volume
       spec:
         accessModes:
         - ReadWriteOnce
@@ -80,7 +80,7 @@ spec:
           requests:
             storage: 200Gi
     - metadata:
-        name: {{ .Release.Name }}-gitlab-etc-pvc
+        name: {{ .Release.Name }}-gitlab-etc-volume
       spec:
         accessModes:
         - ReadWriteOnce
@@ -89,7 +89,7 @@ spec:
           requests:
             storage: 1Gi
     - metadata:
-        name: {{ .Release.Name }}-gitlab-log-pvc
+        name: {{ .Release.Name }}-gitlab-log-volume
       spec:
         accessModes:
         - ReadWriteOnce
