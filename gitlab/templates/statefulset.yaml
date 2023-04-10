@@ -79,6 +79,7 @@ spec:
         resources:
           requests:
             storage: 200Gi
+        numberOfReplicas: 1
     - metadata:
         name: {{ .Release.Name }}-gitlab-etc-volume
       spec:
@@ -88,6 +89,7 @@ spec:
         resources:
           requests:
             storage: 1Gi
+        numberOfReplicas: 2
     - metadata:
         name: {{ .Release.Name }}-gitlab-log-volume
       spec:
@@ -97,3 +99,4 @@ spec:
         resources:
           requests:
             storage: 1Gi
+        numberOfReplicas: 2
