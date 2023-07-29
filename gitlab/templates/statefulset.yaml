@@ -33,7 +33,7 @@ spec:
             secretName: {{ .Release.Name }}-registry-tls
       containers:
         - name: {{ .Release.Name }}-gitlab
-          image: gitlab/gitlab-ce:latest
+          image: gitlab/gitlab-ce:{{ .Values.replicas.gitlab.version }}
           ports:
             - name: http
               containerPort: 80
