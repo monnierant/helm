@@ -1,95 +1,101 @@
 questions:
+  #==============================================================================
+  # Replicas
+  #==============================================================================
+  - variable: replicas.gitlab.replicas
+    default: 1
+    description: Replicas
+    type: integer
+    label: Replicas GitLab
+    group: "Replicas"
+    required: true
 
-#==============================================================================
-# Replicas
-#==============================================================================
-- variable: replicas.gitlab.replicas
-  default: 1
-  description: Replicas
-  type: integer
-  label: Replicas GitLab
-  group: "Replicas"
-  required: true
+  - variable: replicas.gitlab.version
+    default: latest
+    description: Version
+    type: string
+    label: Version GitLab
+    group: "Replicas"
+    required: true
 
-#==============================================================================
-# Storage
-#==============================================================================
-- variable: replicas.gitlab.storageClass.data.name
-  description: Gitlab etc storage class
-  type: enum
-  label: Gitlab etc storage class
-  group: "Storage"
-  required: true
-  options:
-  - "longhorn"
-  - "longhorn-2-replicas"
-  - "longhorn-single"
-- variable: replicas.gitlab.storageClass.data.size
-  description: Replicas
-  type: string
-  label: Replicas GitLab
-  group: "Storage"
-  required: true
-  
-- variable: replicas.gitlab.storageClass.etc.name
-  description: Gitlab etc storage class
-  type: enum
-  label: Gitlab etc storage class
-  group: "Storage"
-  required: true
-  options:
-  - "longhorn"
-  - "longhorn-2-replicas"
-  - "longhorn-single"
-- variable: replicas.gitlab.storageClass.etc.size
-  description: Replicas
-  type: string
-  label: Replicas GitLab
-  group: "Storage"
-  required: true
+  #==============================================================================
+  # Storage
+  #==============================================================================
+  - variable: replicas.gitlab.storageClass.data.name
+    description: Gitlab etc storage class
+    type: enum
+    label: Gitlab etc storage class
+    group: "Storage"
+    required: true
+    options:
+      - "longhorn"
+      - "longhorn-2-replicas"
+      - "longhorn-single"
+  - variable: replicas.gitlab.storageClass.data.size
+    description: Replicas
+    type: string
+    label: Replicas GitLab
+    group: "Storage"
+    required: true
 
-- variable: replicas.gitlab.storageClass.log.name
-  description: Gitlab etc storage class
-  type: enum
-  label: Gitlab etc storage class
-  group: "Storage"
-  required: true
-  options:
-  - "longhorn"
-  - "longhorn-2-replicas"
-  - "longhorn-single"
-- variable: replicas.gitlab.storageClass.log.size
-  description: Replicas
-  type: string
-  label: Replicas GitLab
-  group: "Storage"
-  required: true
+  - variable: replicas.gitlab.storageClass.etc.name
+    description: Gitlab etc storage class
+    type: enum
+    label: Gitlab etc storage class
+    group: "Storage"
+    required: true
+    options:
+      - "longhorn"
+      - "longhorn-2-replicas"
+      - "longhorn-single"
+  - variable: replicas.gitlab.storageClass.etc.size
+    description: Replicas
+    type: string
+    label: Replicas GitLab
+    group: "Storage"
+    required: true
 
-#==============================================================================
-# Ingress
-#==============================================================================
-- variable: ingress.gitlab.host
-  description: Domain for gitlab
-  type: string
-  label: Ingress Gitlab host
-  group: "Ingress"
-  required: true
-- variable: ingress.registry.host
-  description: Domain for registry
-  type: string
-  label: Ingress Registry host
-  group: "Ingress"
-  required: true
-- variable: ingress.issuer
-  description: ""
-  type: enum
-  label: Ingress issuer
-  group: "Ingress"
-  required: true
-  options:
-  - "letsencrypt-prod"
-  - "letsencrypt-staging"
-  
+  - variable: replicas.gitlab.storageClass.log.name
+    description: Gitlab etc storage class
+    type: enum
+    label: Gitlab etc storage class
+    group: "Storage"
+    required: true
+    options:
+      - "longhorn"
+      - "longhorn-2-replicas"
+      - "longhorn-single"
+  - variable: replicas.gitlab.storageClass.log.size
+    description: Replicas
+    type: string
+    label: Replicas GitLab
+    group: "Storage"
+    required: true
+
+  #==============================================================================
+  # Ingress
+  #==============================================================================
+  - variable: ingress.gitlab.host
+    description: Domain for gitlab
+    type: string
+    label: Ingress Gitlab host
+    group: "Ingress"
+    required: true
+  - variable: ingress.registry.host
+    description: Domain for registry
+    type: string
+    label: Ingress Registry host
+    group: "Ingress"
+    required: true
+  - variable: ingress.issuer
+    description: ""
+    type: enum
+    label: Ingress issuer
+    group: "Ingress"
+    required: true
+    options:
+      - "letsencrypt-prod"
+      - "letsencrypt-staging"
 #==============================================================================
 # Métier
 #==============================================================================
@@ -118,7 +124,6 @@ questions:
 #   label: Bot Token
 #   group: "Métier"
 #   required: true
-
 
 #==============================================================================
 # Secrets
