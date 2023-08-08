@@ -37,7 +37,7 @@ spec:
         - name: DOCKER_PRIVILEGED
           value: "true"
         - name: DOCKER_VOLUMES
-          value: /var/run/docker.sock:/var/run/docker.sock"
+          value: /var/run/docker.sock:/var/run/docker.sock
         - name: DOCKER_CACHE_DIR
           value: "/cache"
         lifecycle:
