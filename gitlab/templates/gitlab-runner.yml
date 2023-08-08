@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }}-gitlab-runner
-  replicas: {{ default 1 .Values.replicas.gitlab-runner.replicas | int }}
+  replicas: {{ default 1 .Values.replicas.gitlabRunner.replicas | int }}
   template:
     metadata:
       labels:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-gitlab-runner
-        image: gitlab/gitlab-runner:{{ .Values.gitlab-runner.version}}
+        image: gitlab/gitlab-runner:{{ .Values.gitlabRunner.version}}
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: {{ .Release.Name }}-gitlab-runner-docker
@@ -27,15 +27,15 @@ spec:
         - name: CI_SERVER_URL
           value: "https://{{ .Values.ingress.gitlab.host }}"
         -name: CI_SERVER_TOKEN
-          value: "{{ .Values.gitlab-runner.serverToken }}"
+          value: "{{ .Values.gitlabRunner.serverToken }}"
         # - name: RUNNER_TAG_LIST
-        #   value: "{{ .Values.gitlab-runner.tagList }}"
+        #   value: "{{ .Values.gitlabRunner.tagList }}"
         - name: RUNNER_NAME
           value: "{{ .Release.Name }}-gitlab-runner-{{ .Release.Time }}"
         - name: RUNNER_EXECUTOR
           value: "docker"
         - name: DOCKER_IMAGE
-          value: "{{ .Values.gitlab-runner.dockerImage }}"
+          value: "{{ .Values.gitlabRunner.dockerImage }}"
         - name: REGISTER_MAINTENANCE_NOTE
           value: "Kubernetes Runner"
       volumes:
