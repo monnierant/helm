@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-gitlab-runner
-        image: gitlab/gitlab-runner:{{ .Values.gitlabRunner.version}}
+        image: gitlab/gitlab-runner:{{ .Values.replicas.gitlabRunner.version }}
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: {{ .Release.Name }}-gitlab-runner-docker
@@ -28,8 +28,6 @@ spec:
           value: "https://{{ .Values.ingress.gitlab.host }}"
         -name: CI_SERVER_TOKEN
           value: "{{ .Values.gitlabRunner.serverToken }}"
-        # - name: RUNNER_TAG_LIST
-        #   value: "{{ .Values.gitlabRunner.tagList }}"
         - name: RUNNER_NAME
           value: "{{ .Release.Name }}-gitlab-runner-{{ .Release.Time }}"
         - name: RUNNER_EXECUTOR
