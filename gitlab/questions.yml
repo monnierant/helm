@@ -18,7 +18,7 @@ questions:
     group: "Replicas"
     required: true
 
-  - variable: replicas.gitlab-runner.replicas
+  - variable: replicas.gitlabRunner.replicas
     default: 2
     description: Replicas
     type: integer
@@ -26,7 +26,7 @@ questions:
     group: "Replicas"
     required: true
 
-  - variable: replicas.gitlab-runner.version
+  - variable: replicas.gitlabRunner.version
     default: latest
     description: Version
     type: string
