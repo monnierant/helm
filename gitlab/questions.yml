@@ -18,6 +18,22 @@ questions:
     group: "Replicas"
     required: true
 
+  - variable: replicas.gitlab-runner.replicas
+    default: 2
+    description: Replicas
+    type: integer
+    label: Replicas GitLab-runner
+    group: "Replicas"
+    required: true
+
+  - variable: replicas.gitlab-runner.version
+    default: latest
+    description: Version
+    type: string
+    label: Version GitLab-runner
+    group: "Replicas"
+    required: true
+
   #==============================================================================
   # Storage
   #==============================================================================
@@ -96,45 +112,17 @@ questions:
     options:
       - "letsencrypt-prod"
       - "letsencrypt-staging"
-#==============================================================================
-# Métier
-#==============================================================================
-# - variable: discord.serverName
-#   type: string
-#   label: Server Discord Name
-#   group: "Métier"
-#   required: true
-# - variable: discord.roleAdmin
-#   type: string
-#   label: Role Admin
-#   group: "Métier"
-#   required: true
-# - variable: discord.bot.id
-#   type: string
-#   label: Bot ID
-#   group: "Métier"
-#   required: true
-# - variable: discord.bot.key
-#   type: string
-#   label: Bot Key
-#   group: "Métier"
-#   required: true
-# - variable: discord.bot.token
-#   type: string
-#   label: Bot Token
-#   group: "Métier"
-#   required: true
-
-#==============================================================================
-# Secrets
-#==============================================================================
-# - variable: secrets.mysql
-#   type: string
-#   label: MYSQL Password
-#   group: "Secrets"
-#   required: true
-# - variable: secrets.jwt
-#   type: string
-#   label: JWT Token
-#   group: "Secrets"
-#   required: true
+  #==============================================================================
+  # Métier
+  #==============================================================================
+  - variable: gitlab-runner.dockerImage
+    default: docker:20.10.16
+    type: string
+    label: Gitlab-Runner Docker Image
+    group: "Métier"
+    required: true
+  - variable: gitlab-runner.serverToken
+    type: string
+    label: Gitlab-Runner server Token
+    group: "Métier"
+    required: true
