@@ -16,6 +16,9 @@ ingress:
 #                                   Replicas                                   #
 # ---------------------------------------------------------------------------- #
 replicas:
+  gitlab-runner:
+    version: latest
+    replicas: 2
   gitlab:
     version: latest
     replicas: 1
@@ -29,3 +32,11 @@ replicas:
       data:
         name: longhorn-single
         size: 200Gi
+
+# ---------------------------------------------------------------------------- #
+#                                    Metier                                    #
+# ---------------------------------------------------------------------------- #
+gitlab-runner:
+  serverToken: "xxxxxxxxxxxxxxxxxxxx"
+  dockerImage: "docker:20.10.16"
+  # tagList: "docker"

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-gitlab-runner
+  labels:
+    app: {{ .Release.Name }}-gitlab-runner
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-gitlab-runner
+  replicas: {{ default 1 .Values.replicas.gitlab-runner.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-gitlab-runner
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-gitlab-runner
+        image: gitlab/gitlab-runner:{{ .Values.gitlab-runner.version}}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: {{ .Release.Name }}-gitlab-runner-docker
+          mountPath: "/var/run/docker.sock"
+        env:
+        - name: REGISTER_NON_INTERACTIVE
+          value: "true"
+        - name: CI_SERVER_URL
+          value: "https://{{ .Values.ingress.gitlab.host }}"
+        -name: CI_SERVER_TOKEN
+          value: "{{ .Values.gitlab-runner.serverToken }}"
+        # - name: RUNNER_TAG_LIST
+        #   value: "{{ .Values.gitlab-runner.tagList }}"
+        - name: RUNNER_NAME
+          value: "{{ .Release.Name }}-gitlab-runner-{{ .Release.Time }}"
+        - name: RUNNER_EXECUTOR
+          value: "docker"
+        - name: DOCKER_IMAGE
+          value: "{{ .Values.gitlab-runner.dockerImage }}"
+        - name: REGISTER_MAINTENANCE_NOTE
+          value: "Kubernetes Runner"
+      volumes:
+      - name: {{ .Release.Name }}-gitlab-runner-docker
+        hostPath:
+          path: /var/run/docker.sock
