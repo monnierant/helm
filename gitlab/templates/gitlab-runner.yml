@@ -34,9 +34,10 @@ spec:
           value: "docker"
         - name: DOCKER_IMAGE
           value: "{{ .Values.gitlabRunner.dockerImage }}"
-        command: ["/bin/sh","-c"]
-        args: 
-          - gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner; gitlab-runner register;
+        lifecycle:
+          postStart:
+            exec:
+              command: ["gitlab-runner", "register", "--non-interactive"]
       volumes:
       - name: {{ .Release.Name }}-gitlab-runner-docker
         hostPath:
