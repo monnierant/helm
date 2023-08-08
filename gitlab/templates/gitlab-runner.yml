@@ -32,10 +32,10 @@ spec:
           value: "{{ .Release.Name }}-gitlab-runner-{{ now }}"
         - name: RUNNER_EXECUTOR
           value: "docker"
-        - name: DOCKER_IMAGE
-          value: "{{ .Values.gitlabRunner.dockerImage }}"
-        - name: REGISTER_MAINTENANCE_NOTE
-          value: "Kubernetes Runner"
+        # - name: DOCKER_IMAGE
+        #   value: "{{ .Values.gitlabRunner.dockerImage }}"
+        # - name: REGISTER_MAINTENANCE_NOTE
+        #   value: "Kubernetes Runner"
       volumes:
       - name: {{ .Release.Name }}-gitlab-runner-docker
         hostPath:
