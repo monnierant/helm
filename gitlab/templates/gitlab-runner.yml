@@ -29,7 +29,7 @@ spec:
         -name: CI_SERVER_TOKEN
           value: "{{ .Values.gitlabRunner.serverToken }}"
         - name: RUNNER_NAME
-          value: "{{ .Release.Name }}-gitlab-runner-{{ .Release.Time }}"
+          value: "{{ .Release.Name }}-gitlab-runner-{{ now }}"
         - name: RUNNER_EXECUTOR
           value: "docker"
         - name: DOCKER_IMAGE
