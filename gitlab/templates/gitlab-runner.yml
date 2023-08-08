@@ -34,6 +34,14 @@ spec:
           value: "docker"
         - name: DOCKER_IMAGE
           value: "{{ .Values.gitlabRunner.dockerImage }}"
+        - name: DOCKER_PRIVILEGED
+          value: "true"
+        - name: DOCKER_VOLUMES
+          value: -
+                  /cache
+                  /var/run/docker.sock:/var/run/docker.sock"
+        - name: DOCKER_CACHE_DIR
+          value: "/cache"
         lifecycle:
           postStart:
             exec:
