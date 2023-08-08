@@ -16,7 +16,7 @@ ingress:
 #                                   Replicas                                   #
 # ---------------------------------------------------------------------------- #
 replicas:
-  gitlab-runner:
+  gitlabRunner:
     version: latest
     replicas: 2
   gitlab:
