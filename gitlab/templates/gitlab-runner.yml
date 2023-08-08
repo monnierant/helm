@@ -26,7 +26,7 @@ spec:
           value: "true"
         - name: CI_SERVER_URL
           value: "https://{{ .Values.ingress.gitlab.host }}"
-        -name: CI_SERVER_TOKEN
+        - name: CI_SERVER_TOKEN
           value: "{{ .Values.gitlabRunner.serverToken }}"
         - name: RUNNER_NAME
           value: "{{ .Release.Name }}-gitlab-runner-{{ now }}"
