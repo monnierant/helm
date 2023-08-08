@@ -115,13 +115,13 @@ questions:
   #==============================================================================
   # Métier
   #==============================================================================
-  - variable: gitlab-runner.dockerImage
+  - variable: gitlabRunner.dockerImage
     default: docker:20.10.16
     type: string
     label: Gitlab-Runner Docker Image
     group: "Métier"
     required: true
-  - variable: gitlab-runner.serverToken
+  - variable: gitlabRunner.serverToken
     type: string
     label: Gitlab-Runner server Token
     group: "Métier"
