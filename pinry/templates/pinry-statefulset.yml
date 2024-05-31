@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-pinry
+  labels:
+    app: {{ .Release.Name }}-pinry
+spec:
+  serviceName: {{ .Release.Name }}-pinry
+  replicas: {{ .Values.pinry.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-pinry
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-pinry
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-pinry
+        image: {{ .Values.pinry.image }}:{{ .Values.pinry.tag }}
+        ports:
+        - name: pinry
+          containerPort: 80
+        volumeMounts:
+        - name: {{ .Release.Name }}-data-volume
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Release.Name }}-data-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "longhorn"
+      resources:
+        requests:
+          storage: 300Mi

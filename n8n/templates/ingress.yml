@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-n8n-ing
+  # annotations:
+  #   nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  #   nginx.org/client-max-body-size: "0"
+  #   # acme.cert-manager.io/http01-edit-in-place: "true"
+  #   # cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - {{ .Values.ingress.n8n.host }}
+    secretName: {{ .Release.Name }}-n8n-tls
+  rules:
+  - host: {{ .Values.ingress.n8n.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-n8n-svc
+            port:
+              number: 5678
