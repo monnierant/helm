@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-n8n
+  labels:
+    app: {{ .Release.Name }}-n8n
+spec:
+  serviceName: {{ .Release.Name }}-n8n
+  replicas: {{ .Values.replicas.n8n.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-n8n
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-n8n
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: {{ .Release.Name }}-n8n-data-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-n8n-data-pvc
+      containers:
+        - name: {{ .Release.Name }}-n8n
+          image: n8nio/n8n:latest
+          ports:
+            - name: http
+              containerPort: 5678
+          volumeMounts:
+            - name: {{ .Release.Name }}-n8n-data-volume
+              mountPath: /home/node/.n8n
+          env:
+            - name: N8N_HOST
+              value: {{ .Values.ingress.n8n.host }}
+            - name: N8N_PORT
+              value: "5678"
+            - name: N8N_PROTOCOL
+              value: "https"
+            - name: NODE_ENV
+              value: "production"
+            - name: WEBHOOK_URL
+              value: "https://{{ .Values.ingress.n8n.host }}/"
+            - name: GENERIC_TIMEZONE
+              value: {{ .Values.global.TZ }}
+            - name: TZ
+              value: {{ .Values.global.TZ }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Release.Name }}-n8n-data-volume
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: {{ .Values.replicas.n8n.storageClass.data.name }}
+        resources:
+          requests:
+            storage: {{ .Values.replicas.n8n.storageClass.data.size }}
