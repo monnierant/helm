@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pinry-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}-pinry
+  ports:
+    - port: 80
